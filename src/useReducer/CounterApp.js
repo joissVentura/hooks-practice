@@ -1,24 +1,35 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
+import { ActionTypes as Type } from './ActionTypes';
+import { CounterReducer } from './CounterReducer'
 
-export const Counter = () => {
+export const CounterApp = () => {
 
-    const init = 0;
+    const initialState = 0;
 
-    const [counter, setCounter] = useState(init);
+    const [counter, dispatch] = useReducer(CounterReducer, initialState)
 
     const incrementar = () => {
-        setCounter(counter + 1);
+        const action = {
+            type: Type.increment
+        }
+        dispatch(action)
     }
     const decrementar = () => {
-        setCounter(counter - 1);
+        const action = {
+            type: Type.decrement
+        }
+        dispatch(action)
     }
-    const reiniciar = () => {
-        setCounter(init);
+    const reiniciar = () =>{
+        const action = {
+            type: Type.reset,
+            payload: initialState
+        }
+        dispatch(action)
     }
-    
     return (
         <div className="container mt-4">
-            <h3>Counter con useState: {counter}</h3>
+            <h3>Counter con useReducer: {counter}</h3>
             <div className="row col-6 d-flex justify-content-between">
                 <button 
                     className="btn btn-outline-primary col-2" onClick = { () => incrementar()}>
@@ -36,3 +47,4 @@ export const Counter = () => {
         </div>
     )
 }
+
